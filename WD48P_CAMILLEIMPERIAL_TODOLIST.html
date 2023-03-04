@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>	
+    <head>
+        <title>My To-Do List</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+    </head>
+    <body>
+        <div class="container p-3" style="background: linear-gradient(#fdf5f5, tan);">
+            <h1>My To Do List</h1>
+            <div class="container">
+                <div class="row">
+                    <button onclick="create()" class="col-6" style="background-color: brown; border-radius: 5px;">Add Task for the day</button>
+                    <p id="task_input"></p>
+                </div>
+                <div class="row m-2" style="background-color: white;">
+                    <div class="border" id="checklist">
+                        <h5>Checklist</h5>
+                        <p id="list"></p>
+                    </div>
+                </div>
+                <div class="row m-2" style="background-color: white;">
+                    <div class="border" id="done">
+                        <h5>Marked as Done</h5>
+                        <p id="marked_done"></p>
+                    </div>
+                </div>
+                <div class="row m-2" style="background-color: white;">
+                    <div class="border" id="history">
+                        <h5>History</h5>
+                        <p id="hist"></p>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                var counter = 0;
+
+                function create() {
+                if (counter < 5) {
+                    var subcont = document.createElement("div");
+                    var stamp = new Date();
+                    document.getElementById("task_input").innerHTML = stamp;
+                    subcont.innerHTML = "New task #" + (counter + 1);
+                    var dataContainer = document.createElement("div");
+                    var textbox = document.createElement("input");
+                        textbox.addEventListener("input", function() {
+                            this.style.height = "auto";
+                            this.style.height = this.scrollHeight + "px";
+                            this.size = "50";
+                    });
+                    dataContainer.appendChild(textbox);
+                    subcont.appendChild(dataContainer);
+                    var addtask = document.createElement("button");
+                    addtask.innerHTML = "Add Task";
+                    var done = document.createElement("img");
+                        done.src = "data:image/png;base64,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"
+                        // save.width = "auto";
+                        done.height = 120;
+                    done.style.backgroundColor = "green";
+                    done.style.borderRadius = "5px";
+                    
+                    // add Done button
+                    done.innerHTML = "Done"; 
+                    
+                    // set the text of the button
+                    var save = document.createElement("img");
+                        save.src = "https://www.matthewdevaney.com/wp-content/uploads/2023/02/powerapps-buttonicon-1.gif"
+                        // save.width = "auto";
+                        save.height = 90;
+                    save.innerHTML = "Save!";
+                    var container = document.createElement("div");
+                    container.setAttribute("id", "subcon_" + counter);
+                    container.appendChild(subcont);
+                    container.appendChild(save);
+                    container.appendChild(done); 
+                    
+                    // add Done button to container
+                    save.addEventListener("click", function() {
+                        var clone = subcont.cloneNode(true);
+                        var removeButtons = clone.querySelectorAll("button");
+                        for (var i = 0; i < removeButtons.length; i++) {
+                            removeButtons[i].remove();
+                        }
+                        var timestamp = new Date().toLocaleString();
+                        var timestampDiv = document.createElement("div");
+                        timestampDiv.innerHTML = "Timestamp: " + timestamp;
+                        var savedTaskDiv = document.createElement("div");
+                        savedTaskDiv.appendChild(timestampDiv);
+                        savedTaskDiv.appendChild(clone);
+                        var list = document.getElementById("hist");
+                        list.appendChild(savedTaskDiv);
+                        var inputs = savedTaskDiv.querySelectorAll("input");
+                        for (var i = 0; i < inputs.length; i++) {
+                            var inputValue = inputs[i].value;
+                            var textNode = document.createTextNode(inputValue);
+                            var parentNode = inputs[i].parentNode;
+                            parentNode.removeChild(inputs[i]);
+                            parentNode.appendChild(textNode);
+                        }
+                    });
+                    
+                    done.addEventListener("click", function() {
+                        var clone = subcont.cloneNode(true);
+                        var removeButtons = clone.querySelectorAll("button");
+                        for (var i = 0; i < removeButtons.length; i++) {
+                            removeButtons[i].remove();
+                        }
+                        var timestamp = new Date().toLocaleString();
+                        var timestampDiv = document.createElement("div");
+                        timestampDiv.innerHTML = "Timestamp: " + timestamp;
+                        var savedTaskDiv = document.createElement("div");
+                        savedTaskDiv.appendChild(timestampDiv);
+                        savedTaskDiv.appendChild(clone);
+                        var list = document.getElementById("marked_done");
+                        list.appendChild(savedTaskDiv);
+                        var inputs = savedTaskDiv.querySelectorAll("input");
+                        for (var i = 0; i < inputs.length; i++) {
+                            var inputValue = inputs[i].value;
+                            var textNode = document.createTextNode(inputValue);
+                            var parentNode = inputs[i].parentNode;
+                            parentNode.removeChild(inputs[i]);
+                            parentNode.appendChild(textNode);
+                        }
+                    });
+                        var remove = document.createElement("img");
+                            remove.src = "https://cdn.dribbble.com/users/4072925/screenshots/11322987/media/f88ebba7957d663009f5dfa83695ea0a.gif"
+                            // save.width = "auto";
+                            remove.height = 120;
+                        remove.innerHTML = "Remove";
+                        remove.addEventListener("click", function() {
+                        subcont.remove();
+                        save.remove();
+                        done.remove();n
+                        counter--;
+                    addtask.disabled = false;
+                    });
+                    subcont.appendChild(remove);
+                    document.getElementById("list").appendChild(container);
+                    counter++;
+                } else {
+                    alert("You can create only up to 5 tasks!");
+                }
+                }
+
+            </script>
+        
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5>
+
+    </body>
+</html>
